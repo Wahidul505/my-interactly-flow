@@ -1,10 +1,11 @@
 import React, {useCallback, useState, useRef} from 'react';
 import ReactFlow, { Background, Controls, MiniMap, addEdge, useNodesState, useEdgesState, applyNodeChanges, applyEdgeChanges, ReactFlowProvider } from 'react-flow-renderer';
 import FlowQuestionDnD from './FlowQuestionsDnd';
+// import { ContextMenu } from './contextMenu';
 import './Dnd.css';
+import { ContextMenu } from './Del';
 
 
-// const styleForIcon = {width: '75px'}
 
 const initialNodes = [
     {
@@ -13,34 +14,26 @@ const initialNodes = [
       data: { label: <div><img src='./only logoooooooooo@2x.png' /></div> },
       position: { x: 288, y: 0 },
       style: {width:'75px', boxShadow: '0px 3px 6px #857EEE3D', border: '0px solid #fff', borderRadius: '12px'}
-    },
-    { id: 'ewb-2', 
-        data: { label: 'Whats is Your Name?' }, 
-        position: { x: 250, y: 120 },
-        style: {boxShadow: '0px 3px 6px #857EEE3D', border: '2px solid #AAC8F9', borderRadius: '25px'}
-    },
-    { id: 'ewb-3', 
-        data: { label: 'What is your Email' }, 
-        position: { x: 250, y: 220 },
-        style: {boxShadow: '0px 3px 6px #857EEE3D', border: '2px solid #AAC8F9', borderRadius: '25px'}
-    },
+    }
   ];
-  
+
   const initialEdges = [
-    {
-      id: 'edge-1-2',
-      source: 'ewb-1',
-      target: 'ewb-2',
-      type: 'buttonedge',
-      animated: true
-    },
-    {
-      id: 'edge-2-3',
-      source: 'ewb-2',
-      target: 'ewb-3',
-      type: 'buttonedge',
-      animated: true
-    },
+    // {
+    //   id: 'edge-1-2',
+    //   source: 'ewb-1',
+    //   target: 'ewb-2',
+    //   type: 'buttonedge',
+    //   animated: true,
+    //   // label: '++'
+    // },
+    // {
+    //   id: 'edge-2-3',
+    //   source: 'ewb-2',
+    //   target: 'ewb-3',
+    //   type: 'buttonedge',
+    //   animated: true,
+    //   // label: '++'
+    // },
   ];
 
   // Drag and Drop List
@@ -55,8 +48,15 @@ const FlowBuilderOneSample = () => {
     const [reactFlowInstance, setReactFlowInstance, imgsetFlowInstance] = useState(null);
     // const [nodeHidden, setNodeHidden] = useState(false);
 
-    // Connect the Line Animated 
+    // Connect the Line Animated
     const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
+
+    // Del
+    const [isOpen, setIsOpen] = useState(false);
+
+    // Position
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [elements, setElements] = useState([]);
 
 
     // DND
@@ -67,63 +67,16 @@ const FlowBuilderOneSample = () => {
       event.dataTransfer.dropEffect = 'move';
     }, []);
 
-
-    // Click Event
-    // const onElementClick = (event, element) => event.dataTransfer.getData("click", element);
-
-    const onElementClick = useCallback (
-      (event) => {  
-        // console.log(event, 'click');
-        // event.preventDefault();
-        event.dataTransfer.onClick = 'click'
-
-      }
-    )
-
-    const onClick = useCallback( (event, FlowQuestionDnD) => {
-    // const onClick = useCallback( (event: MouseEvent, element: Node | edge) => {
-
-      console.log(event, 'Gouri')
-      event.preventDefault();
-
-      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-      const type = event.dataTransfer.getData("application/reactflow");
-      // const type = event.dataTransfer.getData("move", FlowQuestionDnD);
-
-      if (typeof type === 'undefined' || !type) {
-        return;
-      }
-
-      // if (typeof img === 'undefined' || !img) {
-      //   return;
-      // }
-
-      const position = reactFlowInstance.project({
-        x: event.clientX - reactFlowBounds.left,
-        y: event.clientY - reactFlowBounds.top,
-      });
-      const newNode = {
-        id: getId(),
-        type,
-        position,
-        data: { label: `${type}` },
-      };
-
-      setNodes((nds) => nds.concat(newNode));
-      console.log(newNode);
-    },
-    [reactFlowInstance])
-
     const onDrop = useCallback(
       (event) => {
         console.log(event, 'shanka')
         event.preventDefault();
-  
+
         const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
         const type = event.dataTransfer.getData('application/reactflow');
         const img = event.dataTransfer.getData('application/reactflow');
-        
-  
+
+
         // check if the dropped element is valid
         if (typeof type === 'undefined' || !type) {
           return;
@@ -134,7 +87,7 @@ const FlowBuilderOneSample = () => {
         }
         event.dataTransfer.getData('click', event);
 
-  
+
         const position = reactFlowInstance.project({
           x: event.clientX - reactFlowBounds.left,
           y: event.clientY - reactFlowBounds.top,
@@ -142,11 +95,11 @@ const FlowBuilderOneSample = () => {
         const newNode = {
           id: getId(),
           type,
-          img,
+          // img,
           position,
           data: { label: `${type}`, icon: `${img}` },
         };
-  
+
         setNodes((nds) => nds.concat(newNode));
         console.log(newNode);
       },
@@ -161,6 +114,7 @@ const FlowBuilderOneSample = () => {
       style: {
         stroke: 'b1b1b7',
       },
+      // label: `<button>Click Here</button>`,
     };
 
     // Connection Line UI
@@ -175,6 +129,28 @@ const FlowBuilderOneSample = () => {
         [setEdges]
       );
 
+    // Style and Type
+    const onContextMenu = (e) => {
+      e.preventDefault();
+      setIsOpen(true);
+      setPosition({ x: e.clientX - 20, y: e.clientY - 20 });
+  }
+
+    // Delete
+    // const deleteNode = () => {
+    //   setElements((elements) => elements.filter((element) => element.id != nodeData.id));
+    //   setIsOpen(false);
+    // };
+
+    // Update
+    // const updateNodedata = (text, node) => {
+    //   const findElementindex = elements.findIndex((items)=>items.id===node.id);
+    //   if(findElementindex>-1 && elements[findElementindex]?.data?.label){
+    //     elements[findElementindex].data.label = text;
+    //     setElements([...elements])
+    //   }
+    // }
+
     return (
         <div>
             <div style={{width:'100%', height:'100vh', background: '#F6F9FF'}} ref={reactFlowWrapper}>
@@ -184,19 +160,22 @@ const FlowBuilderOneSample = () => {
                 edges={edges}
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
-                // Animated Lines Purpose
                 defaultEdgeOptions={edgeOptions}
                 onConnect= {onConnect}
                 onInit={setReactFlowInstance}
                 onDrop={onDrop}
                 connectionLineStyle={connectionLineStyle}
                 onDragOver={onDragOver}
-                onClick={onClick}
-                onElementClick={onElementClick}
-                // onClickAd={onClickAd}
-                // onClickAdd={onClickAdd}
+                // Context Menu Node Data
+                onNodeContextMenu={onContextMenu}
                 >
                   <Controls />
+                  <ContextMenu
+                    isOpen={isOpen}
+                    position={position}
+                    onMouseLeave={()=>setIsOpen(false)}
+                    // actions={[{label:'Delete', effect:deleteNode}]}
+                  >Delete</ContextMenu>
                   <MiniMap />
                   <Background />
                   <div className='DisplayQuestionType_Canvas'>
