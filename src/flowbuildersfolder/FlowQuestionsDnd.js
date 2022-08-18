@@ -1,8 +1,15 @@
 import React from "react";
 import './Dnd.css';
 
+const types = {
+    singleChoice: 'Single-choice',
+    multipleChoice: 'Multiple-choice',
+    questions: 'Questions',
+    carousel: 'Carousel',
+    form: 'Form'
+}
 
-const FlowQuestionDnD = () => {
+const FlowQuestionDnD = ({ createNodeOnClick }) => {
 
     const onDragStart = (event, nodeType) => {
         event.dataTransfer.setData('application/reactflow', nodeType);
@@ -17,31 +24,52 @@ const FlowQuestionDnD = () => {
                     <div className="description">Drag and Drop the Question</div>
                 </div>
                 <div className="CustomScrollBar_Questiontypes">
-                    <div className="dndnode input Dnd-Question-Types Dnd-Flex" onDragStart={(event) => onDragStart(event, 'What is your name?')} draggable>
-                        <img  className='Dnd-Image' src='./logo192.png' />
-                        Question
-                    </div>
-                    <div className="dndnode Dnd-Question-Types Dnd-Flex" onDragStart={(event) => onDragStart(event, 'Choose a Input')} draggable>
-                        Input
-                    </div>
-                    <div className="dndnode Dnd-Question-Types Dnd-Flex" onDragStart={(event) => onDragStart(event, 'Single Choice')} draggable>
+
+                    <div
+                        id={types.singleChoice}
+                        className="dndnode Dnd-Question-Types Dnd-Flex"
+                        onClick={createNodeOnClick}
+                        onDragStart={(event) => onDragStart(event, types.singleChoice)}
+                        draggable>
                         Single Choice
                     </div>
-                    <div className="dndnode Dnd-Question-Types Dnd-Flex" onDragStart={(event) => onDragStart(event, 'Choose a Multiple Choice')} draggable>
+
+                    <div
+                        id={types.multipleChoice}
+                        className="dndnode Dnd-Question-Types Dnd-Flex"
+                        onClick={createNodeOnClick}
+                        onDragStart={(event) => onDragStart(event, types.multipleChoice)}
+                        draggable>
                         Multiple Choice
                     </div>
-                    <div className="dndnode Dnd-Question-Types Dnd-Flex" onDragStart={(event) => onDragStart(event, 'Calender')} draggable>
-                        Calender
+
+                    <div
+                        id={types.questions}
+                        className="dndnode Dnd-Question-Types Dnd-Flex"
+                        onClick={createNodeOnClick}
+                        onDragStart={(event) => onDragStart(event, types.questions)}
+                        draggable>
+                        Questions
                     </div>
-                    <div className="dndnode Dnd-Question-Types Dnd-Flex" onDragStart={(event) => onDragStart(event, 'Location')} draggable>
-                        Location
+
+                    <div
+                        id={types.carousel}
+                        className="dndnode Dnd-Question-Types Dnd-Flex"
+                        onClick={createNodeOnClick}
+                        onDragStart={(event) => onDragStart(event, types.carousel)}
+                        draggable>
+                        Carousel
                     </div>
-                    <div className="dndnode Dnd-Question-Types Dnd-Flex" onDragStart={(event) => onDragStart(event, 'Corousel')} draggable>
-                        Corousel
-                    </div>
-                    <div className="dndnode Dnd-Question-Types  Dnd-Flex" onDragStart={(event) => onDragStart(event, 'Form')} draggable>
+
+                    <div
+                        id={types.form}
+                        className="dndnode Dnd-Question-Types Dnd-Flex"
+                        onClick={createNodeOnClick}
+                        onDragStart={(event) => onDragStart(event, types.form)}
+                        draggable>
                         Form
                     </div>
+
                 </div>
             </div>
         </aside>
