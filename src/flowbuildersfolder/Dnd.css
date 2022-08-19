@@ -1,4 +1,4 @@
-.Dnd-Question-Types{
+.Dnd-Question-Types {
     margin: 16px auto;
     width: 80%;
     background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -20,7 +20,15 @@
     margin: 0 10px 0 0;
 }
 
-.react-flow__node-default, .react-flow__node-group, .react-flow__node-input, .react-flow__node-output {
+.react-flow__node {
+    border-radius: 50%;
+    border: none;
+}
+
+.react-flow__node-default,
+.react-flow__node-group,
+.react-flow__node-input,
+.react-flow__node-output {
     width: auto;
     z-index: 0;
     transform: translate(250px, 120px);
@@ -29,6 +37,20 @@
     border: 2px solid rgb(170, 200, 249);
     border-radius: 25px;
     box-shadow: 0 0 0 0 rgb(170, 200, 249) !important;
+}
+
+.react-flow__node-default {
+    border-radius: 50%;
+    border: 2px solid #AAC8F9;
+}
+
+.icon-container{
+    color: #5C6BED;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
 }
 
 .DisplayQuestionType_Canvas {
@@ -66,11 +88,18 @@
     border-radius: 12px;
 }
 
-.remove-btn{
+.remove-btn {
     position: absolute;
-    top: 0;
+    bottom: 50%;
     right: 0;
+    transform: translate(50%, 50%);
     cursor: pointer;
+    border: none;
+    background-image: linear-gradient(180deg, #448DF3, #3645F7);
+    border-radius: 50%;
+    color: white;
+    font-size: 16px;
+    padding: 0px 6px;
 }
 
 .edgebutton {
@@ -82,13 +111,13 @@
     border-radius: 50%;
     font-size: 12px;
     line-height: 1;
-  }
-  
-  .edgebutton:hover {
+}
+
+.edgebutton:hover {
     box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.08);
-  }
-  
-  .edgebutton-foreignobject body {
+}
+
+.edgebutton-foreignobject body {
     background: transparent;
     width: 40px;
     height: 40px;
@@ -96,5 +125,4 @@
     justify-content: center;
     align-items: center;
     min-height: 40px;
-  }
-  
+}

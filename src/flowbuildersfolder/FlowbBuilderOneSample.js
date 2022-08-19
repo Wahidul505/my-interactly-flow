@@ -1,10 +1,24 @@
 import React, { useCallback, useState, useRef } from 'react';
-import ReactFlow, { Background, Controls, MiniMap, addEdge, useNodesState, useEdgesState, applyNodeChanges, applyEdgeChanges, ReactFlowProvider, ConnectionLineType } from 'react-flow-renderer';
+import ReactFlow, {
+  Background,
+  Controls,
+  MiniMap,
+  addEdge,
+  applyNodeChanges,
+  applyEdgeChanges,
+  ReactFlowProvider,
+  ConnectionLineType
+} from 'react-flow-renderer';
 import FlowQuestionDnD from './FlowQuestionsDnd';
-// import { ContextMenu } from './contextMenu';
 import './Dnd.css';
-import { ContextMenu } from './Del';
 import dagre from 'dagre';
+import { FaQuestion } from 'react-icons/fa';
+import { IoMdRadioButtonOn } from 'react-icons/io';
+import { AiFillCheckSquare } from 'react-icons/ai';
+import { BsFillFileEarmarkTextFill } from 'react-icons/bs';
+import { MdViewCarousel } from 'react-icons/md';
+
+
 
 
 
@@ -24,24 +38,6 @@ const initialNodes = [
   }
 ];
 
-const initialEdges = [
-  // {
-  //   id: 'edge-1-2',
-  //   source: 'ewb-1',
-  //   target: 'ewb-2',
-  //   type: 'buttonedge',
-  //   animated: true,
-  //   // label: '++'
-  // },
-  // {
-  //   id: 'edge-2-3',
-  //   source: 'ewb-2',
-  //   target: 'ewb-3',
-  //   type: 'buttonedge',
-  //   animated: true,
-  //   // label: '++'
-  // },
-];
 
 // Drag and Drop List
 let id = 0;
@@ -51,22 +47,17 @@ const FlowBuilderOneSample = () => {
 
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+  const [edges, setEdges] = useState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [clickedType, setClickedType] = useState();
+  const [label, setLabel] = useState('');
+  const [currentType, setCurrentType] = useState('');
 
 
   // Connect the Line Animated
   const onConnect = useCallback((params) => {
     setEdges((eds) => addEdge({ ...params, type: ConnectionLineType.SmoothStep, animated: true }, eds))
   }, []);
-
-  // Del
-  const [isOpen, setIsOpen] = useState(false);
-
-  // Position
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [elements, setElements] = useState([]);
 
 
   // DND
@@ -86,6 +77,7 @@ const FlowBuilderOneSample = () => {
       const type = event.dataTransfer.getData('application/reactflow');
       const img = event.dataTransfer.getData('application/reactflow');
 
+      setCurrentType(type);
 
       // check if the dropped element is valid
       if (typeof type === 'undefined' || !type) {
@@ -110,7 +102,13 @@ const FlowBuilderOneSample = () => {
         data: {
           label:
             <>
-              <p>{type.split('-').join(' ')}</p>
+              <div className='icon-container'>
+                {type === 'question' && <FaQuestion />}
+                {type === 'single-choice' && <IoMdRadioButtonOn />}
+                {type === 'multiple-choice' && <AiFillCheckSquare />}
+                {type === 'carousel' && < MdViewCarousel />}
+                {type === 'form' && < BsFillFileEarmarkTextFill />}
+              </div>
               <button className='remove-btn'>-</button>
             </>
         },
@@ -135,7 +133,13 @@ const FlowBuilderOneSample = () => {
       data: {
         label:
           <>
-            <p>{event.target.id.split('-').join(' ')}</p>
+            <div className='icon-container'>
+              {event.target.id === 'question' && <FaQuestion />}
+              {event.target.id === 'single-choice' && <IoMdRadioButtonOn />}
+              {event.target.id === 'multiple-choice' && <AiFillCheckSquare />}
+              {event.target.id === 'carousel' && < MdViewCarousel />}
+              {event.target.id === 'form' && < BsFillFileEarmarkTextFill />}
+            </div>
             <button className='remove-btn'>-</button>
           </>
       },
@@ -218,12 +222,6 @@ const FlowBuilderOneSample = () => {
           // onNodeContextMenu={onContextMenu}
           >
             <Controls />
-            <ContextMenu
-              isOpen={isOpen}
-              position={position}
-              onMouseLeave={() => setIsOpen(false)}
-            // actions={[{label:'Delete', effect:deleteNode}]}
-            >Delete</ContextMenu>
             <MiniMap />
             <Background />
             <div className='DisplayQuestionType_Canvas'>

@@ -1,12 +1,18 @@
 import React from "react";
 import './Dnd.css';
+import { IoMdRadioButtonOn } from 'react-icons/io';
+import { AiFillCheckSquare } from 'react-icons/ai';
+import { FaQuestion } from 'react-icons/fa';
+import { BsFillFileEarmarkTextFill } from 'react-icons/bs';
+import { BsFiles } from 'react-icons/bs';
+
 
 const types = {
-    singleChoice: 'Single-choice',
-    multipleChoice: 'Multiple-choice',
-    questions: 'Questions',
-    carousel: 'Carousel',
-    form: 'Form'
+    question: 'question',
+    singleChoice: 'single-choice',
+    multipleChoice: 'multiple-choice',
+    carousel: 'carousel',
+    form: 'form'
 }
 
 const FlowQuestionDnD = ({ createNodeOnClick }) => {
@@ -26,6 +32,15 @@ const FlowQuestionDnD = ({ createNodeOnClick }) => {
                 <div className="CustomScrollBar_Questiontypes">
 
                     <div
+                        id={types.question}
+                        className="dndnode Dnd-Question-Types Dnd-Flex"
+                        onClick={createNodeOnClick}
+                        onDragStart={(event) => onDragStart(event, types.question)}
+                        draggable>
+                        Input
+                    </div>
+
+                    <div
                         id={types.singleChoice}
                         className="dndnode Dnd-Question-Types Dnd-Flex"
                         onClick={createNodeOnClick}
@@ -43,14 +58,6 @@ const FlowQuestionDnD = ({ createNodeOnClick }) => {
                         Multiple Choice
                     </div>
 
-                    <div
-                        id={types.questions}
-                        className="dndnode Dnd-Question-Types Dnd-Flex"
-                        onClick={createNodeOnClick}
-                        onDragStart={(event) => onDragStart(event, types.questions)}
-                        draggable>
-                        Questions
-                    </div>
 
                     <div
                         id={types.carousel}
