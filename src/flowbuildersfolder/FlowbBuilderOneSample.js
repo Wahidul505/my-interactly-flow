@@ -17,6 +17,7 @@ import { IoMdRadioButtonOn } from 'react-icons/io';
 import { AiFillCheckSquare } from 'react-icons/ai';
 import { BsFillFileEarmarkTextFill } from 'react-icons/bs';
 import { MdViewCarousel } from 'react-icons/md';
+import { HiMinusSm } from 'react-icons/hi';
 
 
 
@@ -140,7 +141,7 @@ const FlowBuilderOneSample = () => {
               {event.target.id === 'carousel' && < MdViewCarousel />}
               {event.target.id === 'form' && < BsFillFileEarmarkTextFill />}
             </div>
-            <button className='remove-btn'>-</button>
+            <button className='remove-btn'><HiMinusSm /></button>
           </>
       },
     };

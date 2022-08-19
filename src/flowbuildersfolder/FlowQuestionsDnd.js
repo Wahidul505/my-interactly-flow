@@ -5,6 +5,7 @@ import { AiFillCheckSquare } from 'react-icons/ai';
 import { FaQuestion } from 'react-icons/fa';
 import { BsFillFileEarmarkTextFill } from 'react-icons/bs';
 import { BsFiles } from 'react-icons/bs';
+import { BiPlus } from 'react-icons/bi';
 
 
 const types = {
@@ -27,13 +28,23 @@ const FlowQuestionDnD = ({ createNodeOnClick }) => {
         <aside className="DndHeight_100">
             <div className="DndHeight_100">
                 <div>
-                    <div className="description">Drag and Drop the Question</div>
+                    <span
+                        style={{ display: 'inline-block', marginRight: '8px' }}
+                        className="add-btn">
+                        <BiPlus />
+                    </span>
+                    <span className="question-types-heading">Question types</span>
                 </div>
-                <div className="CustomScrollBar_Questiontypes">
+                <div className="tips">Drag & Drop or click to add to the flow</div>
+                <div className="CustomScrollBar-QuestionType">
+
+                    <div className="search-type">
+                        <input type="text" placeholder="Search here for question types"/>
+                    </div>
 
                     <div
                         id={types.question}
-                        className="dndnode Dnd-Question-Types Dnd-Flex"
+                        className="type"
                         onClick={createNodeOnClick}
                         onDragStart={(event) => onDragStart(event, types.question)}
                         draggable>
@@ -42,7 +53,7 @@ const FlowQuestionDnD = ({ createNodeOnClick }) => {
 
                     <div
                         id={types.singleChoice}
-                        className="dndnode Dnd-Question-Types Dnd-Flex"
+                        className="type"
                         onClick={createNodeOnClick}
                         onDragStart={(event) => onDragStart(event, types.singleChoice)}
                         draggable>
@@ -51,7 +62,7 @@ const FlowQuestionDnD = ({ createNodeOnClick }) => {
 
                     <div
                         id={types.multipleChoice}
-                        className="dndnode Dnd-Question-Types Dnd-Flex"
+                        className="type"
                         onClick={createNodeOnClick}
                         onDragStart={(event) => onDragStart(event, types.multipleChoice)}
                         draggable>
@@ -61,7 +72,7 @@ const FlowQuestionDnD = ({ createNodeOnClick }) => {
 
                     <div
                         id={types.carousel}
-                        className="dndnode Dnd-Question-Types Dnd-Flex"
+                        className="type"
                         onClick={createNodeOnClick}
                         onDragStart={(event) => onDragStart(event, types.carousel)}
                         draggable>
@@ -70,7 +81,7 @@ const FlowQuestionDnD = ({ createNodeOnClick }) => {
 
                     <div
                         id={types.form}
-                        className="dndnode Dnd-Question-Types Dnd-Flex"
+                        className="type"
                         onClick={createNodeOnClick}
                         onDragStart={(event) => onDragStart(event, types.form)}
                         draggable>
