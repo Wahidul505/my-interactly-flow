@@ -1,8 +1,6 @@
 import React, { useCallback, useState, useRef } from 'react';
 import ReactFlow, {
   Background,
-  Controls,
-  MiniMap,
   addEdge,
   applyNodeChanges,
   applyEdgeChanges,
@@ -11,23 +9,14 @@ import ReactFlow, {
 } from 'react-flow-renderer';
 import FlowQuestionDnD from './FlowQuestionsDnd';
 import './Dnd.css';
-import dagre from 'dagre';
 import { FaQuestion } from 'react-icons/fa';
 import { IoMdRadioButtonOn } from 'react-icons/io';
 import { AiFillCheckSquare } from 'react-icons/ai';
 import { BsFillFileEarmarkTextFill } from 'react-icons/bs';
 import { MdViewCarousel } from 'react-icons/md';
-import { HiMinusSm } from 'react-icons/hi';
+import { TiMinus } from 'react-icons/ti';
+import EditContainer from './EditOptions/EditContainer';
 
-
-
-
-
-const dagreGraph = new dagre.graphlib.Graph();
-dagreGraph.setDefaultEdgeLabel(() => ({}));
-
-const nodeWidth = 172;
-const nodeHeight = 36;
 
 const initialNodes = [
   {
@@ -51,8 +40,6 @@ const FlowBuilderOneSample = () => {
   const [edges, setEdges] = useState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [clickedType, setClickedType] = useState();
-  const [label, setLabel] = useState('');
-  const [currentType, setCurrentType] = useState('');
 
 
   // Connect the Line Animated
@@ -77,8 +64,6 @@ const FlowBuilderOneSample = () => {
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
       const type = event.dataTransfer.getData('application/reactflow');
       const img = event.dataTransfer.getData('application/reactflow');
-
-      setCurrentType(type);
 
       // check if the dropped element is valid
       if (typeof type === 'undefined' || !type) {
@@ -110,7 +95,7 @@ const FlowBuilderOneSample = () => {
                 {type === 'carousel' && < MdViewCarousel />}
                 {type === 'form' && < BsFillFileEarmarkTextFill />}
               </div>
-              <button className='remove-btn'>-</button>
+              <button className='remove-btn'><TiMinus /></button>
             </>
         },
       };
@@ -141,7 +126,7 @@ const FlowBuilderOneSample = () => {
               {event.target.id === 'carousel' && < MdViewCarousel />}
               {event.target.id === 'form' && < BsFillFileEarmarkTextFill />}
             </div>
-            <button className='remove-btn'><HiMinusSm /></button>
+            <button className='remove-btn'><TiMinus /></button>
           </>
       },
     };
@@ -194,7 +179,7 @@ const FlowBuilderOneSample = () => {
   // }
 
   const onNodeClick = (event, node) => {
-    if (event.target.className === 'remove-btn') {
+    if (event.target.parentNode.parentNode.className === 'remove-btn' || event.target.className === 'remove-btn' || event.target.parentNode.className === 'remove-btn') {
       const rest = nodes.filter(singleNode => singleNode.id !== node.id);
       setNodes(rest);
     }
@@ -222,11 +207,12 @@ const FlowBuilderOneSample = () => {
           // Context Menu Node Data
           // onNodeContextMenu={onContextMenu}
           >
-            <Controls />
-            <MiniMap />
             <Background />
             <div className='DisplayQuestionType_Canvas'>
               <FlowQuestionDnD createNodeOnClick={createNodeOnClick} />
+            </div>
+            <div>
+              <EditContainer />
             </div>
           </ReactFlow>
         </ReactFlowProvider>

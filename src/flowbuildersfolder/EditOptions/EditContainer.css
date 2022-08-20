@@ -1,0 +1,79 @@
+.edit-container {
+    text-align: center;
+    position: absolute;
+    top: 4%;
+    right: 2%;
+    z-index: 9;
+    background-color: white;
+    border: 2px solid #bdd5fa98;
+    border-radius: 10px;
+    height: 85vh;
+    padding: 20px;
+    width: 320px;
+}
+
+.edit-container header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-container .heading {
+    color: rgb(97, 97, 97);
+    font-size: 20px;
+    text-align: start;
+}
+
+.edit-container .close-btn {
+    background-color: white;
+    border: 1px solid rgba(128, 128, 128, 0.192);
+    border-radius: 2px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.edit-container .textarea-container {
+    border: 1px solid rgba(128, 128, 128, 0.295);
+    border-radius: 8px;
+    height: 150px;
+    margin: 22px 0px;
+}
+
+.edit-container .textarea-container .textarea-edits {
+    margin: 10px 0px;
+    display: flex;
+    justify-content: start;
+    padding-left: 10px;
+    gap: 4px;
+    color: rgb(167, 167, 167);
+}
+
+.edit-container .textarea-container .textarea-edits span {
+    display: flex;
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+.edit-container .textarea-container .textarea-edits select {
+    border: none;
+    color: rgb(167, 167, 167);
+}
+
+.edit-container .textarea-container .textarea-edits select:focus {
+    outline: none;
+}
+
+.edit-container .textarea-container textarea {
+    border: none;
+    height: 50%;
+    width: 90%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.edit-container .textarea-container textarea:focus {
+    outline: none;
+}
